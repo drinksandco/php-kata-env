@@ -25,17 +25,19 @@ final class Finder
         for ($i = 0; $i < count($this->people); $i++) {
             for ($j = $i + 1; $j < count($this->people); $j++) {
                 $peopleByAgeDifference = new PeopleByAgeDifference();
-
+                
+                $firstPerson = $this->people[$i];
+                $secondPerson = $this->people[$j];
                 if ($this->isFirstBirthdaySmallerThanSecondOne(
-                    $this->people[$i]->birthDate,
-                    $this->people[$j]->birthDate
+                    $firstPerson->birthDate,
+                    $secondPerson->birthDate
                 )
                 ) {
-                    $peopleByAgeDifference->firstPerson = $this->people[$i];
-                    $peopleByAgeDifference->secondPerson = $this->people[$j];
+                    $peopleByAgeDifference->firstPerson = $firstPerson;
+                    $peopleByAgeDifference->secondPerson = $secondPerson;
                 } else {
-                    $peopleByAgeDifference->firstPerson = $this->people[$j];
-                    $peopleByAgeDifference->secondPerson = $this->people[$i];
+                    $peopleByAgeDifference->firstPerson = $secondPerson;
+                    $peopleByAgeDifference->secondPerson = $firstPerson;
                 }
 
                 $peopleByAgeDifference->timeDifference = $peopleByAgeDifference->secondPerson->birthDate->getTimestamp()
