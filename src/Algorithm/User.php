@@ -6,7 +6,7 @@ namespace Kata\Algorithm;
 
 use DateTime;
 
-final class Thing
+final class User
 {
     /** @var string */
     public $name;
