@@ -31,13 +31,13 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_empty_when_given_empty_list()
     {
-        $list = [];
-        $finder = new Finder($list);
+        $people = [];
+        $finder = new Finder($people);
 
         $result = $finder->find(FT::ONE);
 
-        $this->assertEquals(null, $result->p1);
-        $this->assertEquals(null, $result->p2);
+        $this->assertEquals(null, $result->older_person);
+        $this->assertEquals(null, $result->younger_person);
     }
 
     /** @test */
@@ -49,8 +49,8 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(FT::ONE);
 
-        $this->assertEquals(null, $result->p1);
-        $this->assertEquals(null, $result->p2);
+        $this->assertEquals(null, $result->older_person);
+        $this->assertEquals(null, $result->younger_person);
     }
 
     /** @test */
@@ -63,8 +63,8 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(FT::ONE);
 
-        $this->assertEquals($this->sue, $result->p1);
-        $this->assertEquals($this->greg, $result->p2);
+        $this->assertEquals($this->sue, $result->older_person);
+        $this->assertEquals($this->greg, $result->younger_person);
     }
 
     /** @test */
@@ -77,8 +77,8 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(FT::TWO);
 
-        $this->assertEquals($this->greg, $result->p1);
-        $this->assertEquals($this->mike, $result->p2);
+        $this->assertEquals($this->greg, $result->older_person);
+        $this->assertEquals($this->mike, $result->younger_person);
     }
 
     /** @test */
@@ -93,8 +93,8 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(FT::TWO);
 
-        $this->assertEquals($this->sue, $result->p1);
-        $this->assertEquals($this->sarah, $result->p2);
+        $this->assertEquals($this->sue, $result->older_person);
+        $this->assertEquals($this->sarah, $result->younger_person);
     }
 
     /**
@@ -111,7 +111,7 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(FT::ONE);
 
-        $this->assertEquals($this->sue, $result->p1);
-        $this->assertEquals($this->greg, $result->p2);
+        $this->assertEquals($this->sue, $result->older_person);
+        $this->assertEquals($this->greg, $result->younger_person);
     }
 }

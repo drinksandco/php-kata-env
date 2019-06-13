@@ -7,53 +7,52 @@ namespace Kata\Algorithm;
 final class Finder
 {
     /** @var Person[] */
-    private $_p;
+    private $people;
 
-    public function __construct(array $p)
+    public function __construct(array $people)
     {
-        $this->_p = $p;
+        $this->people = $people;
     }
 
-    public function find(int $ft): F
+    public function find(int $ft): Couple
     {
-        /** @var F[] $tr */
-        $tr = [];
+        /** @var Couple[] $couples_array */
+        $couples_array = [];
 
-        for ($i = 0; $i < count($this->_p); $i++) {
-            for ($j = $i + 1; $j < count($this->_p); $j++) {
-                $r = new F();
+        for ($i = 0; $i < count($this->people); $i++) {
+            for ($j = $i + 1; $j < count($this->people); $j++) {
+                $couple = new Couple();
 
-                if ($this->_p[$i]->getBirthDate() < $this->_p[$j]->getBirthDate()) {
-                    $r->p1 = $this->_p[$i];
-                    $r->p2 = $this->_p[$j];
+                if ($this->people[$i]->getBirthDate() < $this->people[$j]->getBirthDate()) {
+                    $couple->older_person = $this->people[$i];
+                    $couple->younger_person = $this->people[$j];
                 } else {
-                    $r->p1 = $this->_p[$j];
-                    $r->p2 = $this->_p[$i];
+                    $couple->older_person = $this->people[$j];
+                    $couple->younger_person = $this->people[$i];
                 }
 
-                $r->d = $r->p2->getBirthDate()->getTimestamp()
-                    - $r->p1->getBirthDate()->getTimestamp();
+                $couple->age_difference = $couple->younger_person->getBirthDate()->getTimestamp() - $couple->older_person->getBirthDate()->getTimestamp();
 
-                $tr[] = $r;
+                $couples_array[] = $couple;
             }
         }
 
-        if (count($tr) < 1) {
-            return new F();
+        if (count($couples_array) < 1) {
+            return new Couple();
         }
 
-        $answer = $tr[0];
+        $answer = $couples_array[0];
 
-        foreach ($tr as $result) {
+        foreach ($couples_array as $result) {
             switch ($ft) {
                 case FT::ONE:
-                    if ($result->d < $answer->d) {
+                    if ($result->age_difference < $answer->age_difference) {
                         $answer = $result;
                     }
                     break;
 
                 case FT::TWO:
-                    if ($result->d > $answer->d) {
+                    if ($result->age_difference > $answer->age_difference) {
                         $answer = $result;
                     }
                     break;
