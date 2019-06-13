@@ -45,8 +45,8 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_empty_when_given_empty_list()
     {
-        $list   = [];
-        $finder = new Finder($list);
+        $users   = [];
+        $finder = new Finder($users);
 
         $result = $finder->find(FT::ONE);
 
@@ -57,9 +57,9 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_empty_when_given_one_person()
     {
-        $list   = [];
-        $list[] = $this->sue;
-        $finder = new Finder($list);
+        $users   = [];
+        $users[] = $this->sue;
+        $finder = new Finder($users);
 
         $result = $finder->find(FT::ONE);
 
@@ -70,10 +70,10 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_closest_two_for_two_people()
     {
-        $list   = [];
-        $list[] = $this->sue;
-        $list[] = $this->greg;
-        $finder = new Finder($list);
+        $users   = [];
+        $users[] = $this->sue;
+        $users[] = $this->greg;
+        $finder = new Finder($users);
 
         $result = $finder->find(FT::ONE);
 
@@ -84,10 +84,10 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_furthest_two_for_two_people()
     {
-        $list   = [];
-        $list[] = $this->mike;
-        $list[] = $this->greg;
-        $finder = new Finder($list);
+        $users   = [];
+        $users[] = $this->mike;
+        $users[] = $this->greg;
+        $finder = new Finder($users);
 
         $result = $finder->find(FT::TWO);
 
@@ -98,12 +98,12 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_furthest_two_for_four_people()
     {
-        $list   = [];
-        $list[] = $this->sue;
-        $list[] = $this->sarah;
-        $list[] = $this->mike;
-        $list[] = $this->greg;
-        $finder = new Finder($list);
+        $users   = [];
+        $users[] = $this->sue;
+        $users[] = $this->sarah;
+        $users[] = $this->mike;
+        $users[] = $this->greg;
+        $finder = new Finder($users);
 
         $result = $finder->find(FT::TWO);
 
@@ -116,12 +116,12 @@ final class FinderTest extends TestCase
      */
     public function should_return_closest_two_for_four_people()
     {
-        $list   = [];
-        $list[] = $this->sue;
-        $list[] = $this->sarah;
-        $list[] = $this->mike;
-        $list[] = $this->greg;
-        $finder = new Finder($list);
+        $users   = [];
+        $users[] = $this->sue;
+        $users[] = $this->sarah;
+        $users[] = $this->mike;
+        $users[] = $this->greg;
+        $finder = new Finder($users);
 
         $result = $finder->find(FT::ONE);
 
