@@ -1,45 +1,35 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Kata\Algorithm;
+
+use function count;
 
 final class Finder
 {
     /** @var Person[] */
     private $people;
 
-    public function __construct(array $p)
+    public function __construct(array $some_people)
     {
-        $this->people = $p;
+        $this->people = $some_people;
     }
 
-    public function find(int $criteria): F
+    public function find(int $criteria): AgeComparatorResult
     {
-        /** @var F[] $results */
+        /** @var AgeComparatorResult[] $results */
         $results = [];
+        $number_of_people = count($this->people);
 
-        for ($i = 0; $i < count($this->people); $i++) {
-            for ($j = $i + 1; $j < count($this->people); $j++) {
-                $result = new F();
-
-                if ($this->people[$i]->birthDate() < $this->people[$j]->birthDate()) {
-                    $result->person_one = $this->people[$i];
-                    $result->person_two = $this->people[$j];
-                } else {
-                    $result->person_one = $this->people[$j];
-                    $result->person_two = $this->people[$i];
-                }
-
-                $result->age_difference = $result->person_two->birthDate()->getTimestamp()
-                    - $result->person_one->birthDate()->getTimestamp();
-
-                $results[] = $result;
+        foreach ($this->people as $index => $person) {
+            for ($j = $index + 1; $j < $number_of_people; $j++) {
+                $results[] = $this->compareTwoBirthDates($person, $j);
             }
         }
 
         if (count($results) < 1) {
-            return new F();
+            throw new \InvalidArgumentException('Add at least two people');
         }
 
         $answer = $results[0];
@@ -61,5 +51,16 @@ final class Finder
         }
 
         return $answer;
+    }
+
+    private function compareTwoBirthDates(
+        Person $person,
+        int $j
+    ): AgeComparatorResult{
+        if ($person->birthDate() < $this->people[$j]->birthDate()) {
+            return new AgeComparatorResult($person, $this->people[$j]);
+        }
+
+        return new AgeComparatorResult($this->people[$j], $person);
     }
 }

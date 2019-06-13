@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KataTest\Unit\Algorithm;
 
 use DateTimeImmutable;
+use InvalidArgumentException;
 use Kata\Algorithm\Criteria;
 use Kata\Algorithm\Finder;
 use Kata\Algorithm\Person;
@@ -32,26 +33,26 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_empty_when_given_empty_list()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Add at least two people');
+
         $list = [];
         $finder = new Finder($list);
 
-        $result = $finder->find(Criteria::CLOSEST);
-
-        $this->assertEquals(null, $result->person_one);
-        $this->assertEquals(null, $result->person_two);
+        $finder->find(Criteria::CLOSEST);
     }
 
     /** @test */
     public function should_return_empty_when_given_one_person()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Add at least two people');
+
         $list = [];
         $list[] = $this->sue;
         $finder = new Finder($list);
 
-        $result = $finder->find(Criteria::CLOSEST);
-
-        $this->assertEquals(null, $result->person_one);
-        $this->assertEquals(null, $result->person_two);
+        $finder->find(Criteria::CLOSEST);
     }
 
     /** @test */
