@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace Kata\Algorithm;
 
-final class F
+final class PeopleByAgeDifference
 {
     /** @var Person */
-    public $p1;
+    public $firstPerson;
 
     /** @var Person */
-    public $p2;
+    public $secondPerson;
 
     /** @var int */
-    public $d;
+    public $timeDifference;
 }

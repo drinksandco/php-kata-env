@@ -14,32 +14,32 @@ final class Finder
         $this->_p = $p;
     }
 
-    public function find(int $ft): F
+    public function find(int $ft): PeopleByAgeDifference
     {
-        /** @var F[] $tr */
+        /** @var PeopleByAgeDifference[] $tr */
         $tr = [];
 
         for ($i = 0; $i < count($this->_p); $i++) {
             for ($j = $i + 1; $j < count($this->_p); $j++) {
-                $r = new F();
+                $r = new PeopleByAgeDifference();
 
                 if ($this->_p[$i]->birthDate < $this->_p[$j]->birthDate) {
-                    $r->p1 = $this->_p[$i];
-                    $r->p2 = $this->_p[$j];
+                    $r->firstPerson = $this->_p[$i];
+                    $r->secondPerson = $this->_p[$j];
                 } else {
-                    $r->p1 = $this->_p[$j];
-                    $r->p2 = $this->_p[$i];
+                    $r->firstPerson = $this->_p[$j];
+                    $r->secondPerson = $this->_p[$i];
                 }
 
-                $r->d = $r->p2->birthDate->getTimestamp()
-                    - $r->p1->birthDate->getTimestamp();
+                $r->timeDifference = $r->secondPerson->birthDate->getTimestamp()
+                    - $r->firstPerson->birthDate->getTimestamp();
 
                 $tr[] = $r;
             }
         }
 
         if (count($tr) < 1) {
-            return new F();
+            return new PeopleByAgeDifference();
         }
 
         $answer = $tr[0];
@@ -47,13 +47,13 @@ final class Finder
         foreach ($tr as $result) {
             switch ($ft) {
                 case FinderCriteria::CLOSEST:
-                    if ($result->d < $answer->d) {
+                    if ($result->timeDifference < $answer->timeDifference) {
                         $answer = $result;
                     }
                     break;
 
                 case FinderCriteria::FURTHEST:
-                    if ($result->d > $answer->d) {
+                    if ($result->timeDifference > $answer->timeDifference) {
                         $answer = $result;
                     }
                     break;
