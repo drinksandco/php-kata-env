@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace KataTest\Unit\Algorithm;
 
-use Kata\Algorithm\Finder;
-use Kata\Algorithm\FT;
+use Kata\Algorithm\FindCoupleByAgeDifference;
+use Kata\Algorithm\AgeDifferenceCriteria;
 use Kata\Algorithm\Person;
 use PHPUnit\Framework\TestCase;
 
-final class FinderTest extends TestCase
+final class FindCoupleByAgeDifferenceTest extends TestCase
 {
     /** @var Person */
     private $sue;
@@ -32,9 +32,9 @@ final class FinderTest extends TestCase
     public function should_return_empty_when_given_empty_list()
     {
         $people = [];
-        $finder = new Finder($people);
+        $finder = new FindCoupleByAgeDifference($people);
 
-        $result = $finder->find(FT::ONE);
+        $result = $finder->find(AgeDifferenceCriteria::CLOSEST_BIRTH_DATES);
 
         $this->assertEquals(null, $result->older_person);
         $this->assertEquals(null, $result->younger_person);
@@ -45,9 +45,9 @@ final class FinderTest extends TestCase
     {
         $list = [];
         $list[] = $this->sue;
-        $finder = new Finder($list);
+        $finder = new FindCoupleByAgeDifference($list);
 
-        $result = $finder->find(FT::ONE);
+        $result = $finder->find(AgeDifferenceCriteria::CLOSEST_BIRTH_DATES);
 
         $this->assertEquals(null, $result->older_person);
         $this->assertEquals(null, $result->younger_person);
@@ -59,9 +59,9 @@ final class FinderTest extends TestCase
         $list = [];
         $list[] = $this->sue;
         $list[] = $this->greg;
-        $finder = new Finder($list);
+        $finder = new FindCoupleByAgeDifference($list);
 
-        $result = $finder->find(FT::ONE);
+        $result = $finder->find(AgeDifferenceCriteria::CLOSEST_BIRTH_DATES);
 
         $this->assertEquals($this->sue, $result->older_person);
         $this->assertEquals($this->greg, $result->younger_person);
@@ -73,9 +73,9 @@ final class FinderTest extends TestCase
         $list = [];
         $list[] = $this->mike;
         $list[] = $this->greg;
-        $finder = new Finder($list);
+        $finder = new FindCoupleByAgeDifference($list);
 
-        $result = $finder->find(FT::TWO);
+        $result = $finder->find(AgeDifferenceCriteria::FURTHEST_BIRTH_DATES);
 
         $this->assertEquals($this->greg, $result->older_person);
         $this->assertEquals($this->mike, $result->younger_person);
@@ -89,9 +89,9 @@ final class FinderTest extends TestCase
         $list[] = $this->sarah;
         $list[] = $this->mike;
         $list[] = $this->greg;
-        $finder = new Finder($list);
+        $finder = new FindCoupleByAgeDifference($list);
 
-        $result = $finder->find(FT::TWO);
+        $result = $finder->find(AgeDifferenceCriteria::FURTHEST_BIRTH_DATES);
 
         $this->assertEquals($this->sue, $result->older_person);
         $this->assertEquals($this->sarah, $result->younger_person);
@@ -107,9 +107,9 @@ final class FinderTest extends TestCase
         $list[] = $this->sarah;
         $list[] = $this->mike;
         $list[] = $this->greg;
-        $finder = new Finder($list);
+        $finder = new FindCoupleByAgeDifference($list);
 
-        $result = $finder->find(FT::ONE);
+        $result = $finder->find(AgeDifferenceCriteria::CLOSEST_BIRTH_DATES);
 
         $this->assertEquals($this->sue, $result->older_person);
         $this->assertEquals($this->greg, $result->younger_person);

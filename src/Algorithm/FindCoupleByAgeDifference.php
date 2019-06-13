@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Kata\Algorithm;
 
-final class Finder
+final class FindCoupleByAgeDifference
 {
     /** @var Person[] */
     private $people;
@@ -14,7 +14,20 @@ final class Finder
         $this->people = $people;
     }
 
-    public function find(int $ft): Couple
+    public function find(int $finder_criteria): Couple
+    {
+        $couples_array = $this->generateCouples();
+
+        if (count($couples_array) < 1) {
+            return new Couple();
+        }
+
+        $couple = $this->findCoupleByAgeDifferenceCriteria($finder_criteria, ...$couples_array);
+
+        return $couple;
+    }
+
+    private function generateCouples(): array
     {
         /** @var Couple[] $couples_array */
         $couples_array = [];
@@ -36,29 +49,30 @@ final class Finder
                 $couples_array[] = $couple;
             }
         }
+        return $couples_array;
+    }
 
-        if (count($couples_array) < 1) {
-            return new Couple();
-        }
-
+    private function findCoupleByAgeDifferenceCriteria(
+        int $finder_criteria,
+        Couple... $couples_array
+    ): Couple {
         $answer = $couples_array[0];
 
         foreach ($couples_array as $result) {
-            switch ($ft) {
-                case FT::ONE:
+            switch ($finder_criteria) {
+                case AgeDifferenceCriteria::CLOSEST_BIRTH_DATES:
                     if ($result->age_difference < $answer->age_difference) {
                         $answer = $result;
                     }
                     break;
 
-                case FT::TWO:
+                case AgeDifferenceCriteria::FURTHEST_BIRTH_DATES:
                     if ($result->age_difference > $answer->age_difference) {
                         $answer = $result;
                     }
                     break;
             }
         }
-
         return $answer;
     }
 }
