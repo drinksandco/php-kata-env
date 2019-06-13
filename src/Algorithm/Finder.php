@@ -23,7 +23,7 @@ final class Finder
             for ($j = $i + 1; $j < count($this->people); $j++) {
                 $result = new F();
 
-                if ($this->people[$i]->birthDate < $this->people[$j]->birthDate) {
+                if ($this->people[$i]->birthDate() < $this->people[$j]->birthDate()) {
                     $result->person_one = $this->people[$i];
                     $result->person_two = $this->people[$j];
                 } else {
@@ -31,8 +31,8 @@ final class Finder
                     $result->person_two = $this->people[$i];
                 }
 
-                $result->age_difference = $result->person_two->birthDate->getTimestamp()
-                    - $result->person_one->birthDate->getTimestamp();
+                $result->age_difference = $result->person_two->birthDate()->getTimestamp()
+                    - $result->person_one->birthDate()->getTimestamp();
 
                 $results[] = $result;
             }

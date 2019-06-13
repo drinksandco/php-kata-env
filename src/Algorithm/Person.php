@@ -4,33 +4,31 @@ declare(strict_types = 1);
 
 namespace Kata\Algorithm;
 
-use DateTime;
+use DateTimeImmutable;
 
 final class Person
 {
     /** @var string */
-    public $name;
+    private $name;
 
-    /** @var DateTime */
-    public $birthDate;
+    /** @var DateTimeImmutable */
+    private $birthDate;
 
-    public function getName(): string
+    public function __construct(
+        string $a_name,
+        DateTimeImmutable $a_birthDate
+    ) {
+        $this->name = $a_name;
+        $this->birthDate = $a_birthDate;
+    }
+
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
-
-    public function getBirthDate(): DateTime
+    public function birthDate(): DateTimeImmutable
     {
         return $this->birthDate;
-    }
-
-    public function setBirthDate(DateTime $birthDate)
-    {
-        $this->birthDate = $birthDate;
     }
 }
