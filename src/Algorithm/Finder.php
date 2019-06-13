@@ -6,7 +6,7 @@ namespace Kata\Algorithm;
 
 final class Finder
 {
-    /** @var Thing[] */
+    /** @var Person[] */
     private $_p;
 
     public function __construct(array $p)
@@ -23,7 +23,7 @@ final class Finder
             for ($j = $i + 1; $j < count($this->_p); $j++) {
                 $r = new F();
 
-                if ($this->_p[$i]->birthDate < $this->_p[$j]->birthDate) {
+                if ($this->_p[$i]->getBirthDate() < $this->_p[$j]->getBirthDate()) {
                     $r->p1 = $this->_p[$i];
                     $r->p2 = $this->_p[$j];
                 } else {
@@ -31,8 +31,8 @@ final class Finder
                     $r->p2 = $this->_p[$i];
                 }
 
-                $r->d = $r->p2->birthDate->getTimestamp()
-                    - $r->p1->birthDate->getTimestamp();
+                $r->d = $r->p2->getBirthDate()->getTimestamp()
+                    - $r->p1->getBirthDate()->getTimestamp();
 
                 $tr[] = $r;
             }

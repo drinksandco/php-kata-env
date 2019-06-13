@@ -6,13 +6,19 @@ namespace Kata\Algorithm;
 
 use DateTime;
 
-final class Thing
+final class Person
 {
     /** @var string */
-    public $name;
+    private $name;
 
     /** @var DateTime */
-    public $birthDate;
+    private $birthDate;
+
+    public function __construct(string $name, string $birthDate)
+    {
+        $this->name = $name;
+        $this->birthDate = new DateTime($birthDate);
+    }
 
     public function getName(): string
     {

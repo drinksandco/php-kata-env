@@ -1,51 +1,37 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace KataTest\Unit\Algorithm;
 
 use Kata\Algorithm\Finder;
 use Kata\Algorithm\FT;
-use Kata\Algorithm\Thing;
+use Kata\Algorithm\Person;
 use PHPUnit\Framework\TestCase;
 
 final class FinderTest extends TestCase
 {
-    /** @var Thing */
+    /** @var Person */
     private $sue;
-
-    /** @var Thing */
+    /** @var Person */
     private $greg;
-
-    /** @var Thing */
+    /** @var Person */
     private $sarah;
-
-    /** @var Thing */
+    /** @var Person */
     private $mike;
 
     protected function setUp()
     {
-        $this->sue            = new Thing();
-        $this->sue->name      = "Sue";
-        $this->sue->birthDate = new \DateTime("1950-01-01");
-
-        $this->greg            = new Thing();
-        $this->greg->name      = "Greg";
-        $this->greg->birthDate = new \DateTime("1952-05-01");
-
-        $this->sarah            = new Thing();
-        $this->sarah->name      = "Sarah";
-        $this->sarah->birthDate = new \DateTime("1982-01-01");
-
-        $this->mike            = new Thing();
-        $this->mike->name      = "Mike";
-        $this->mike->birthDate = new \DateTime("1979-01-01");
+        $this->sue = new Person('Sue', '1950-01-01');
+        $this->greg = new Person('Greg', '1952-05-01');
+        $this->sarah = new Person('Sarah', '1982-01-01');
+        $this->mike = new Person('Mike', '1979-01-01');
     }
 
     /** @test */
     public function should_return_empty_when_given_empty_list()
     {
-        $list   = [];
+        $list = [];
         $finder = new Finder($list);
 
         $result = $finder->find(FT::ONE);
@@ -57,7 +43,7 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_empty_when_given_one_person()
     {
-        $list   = [];
+        $list = [];
         $list[] = $this->sue;
         $finder = new Finder($list);
 
@@ -70,7 +56,7 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_closest_two_for_two_people()
     {
-        $list   = [];
+        $list = [];
         $list[] = $this->sue;
         $list[] = $this->greg;
         $finder = new Finder($list);
@@ -84,7 +70,7 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_furthest_two_for_two_people()
     {
-        $list   = [];
+        $list = [];
         $list[] = $this->mike;
         $list[] = $this->greg;
         $finder = new Finder($list);
@@ -98,7 +84,7 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_furthest_two_for_four_people()
     {
-        $list   = [];
+        $list = [];
         $list[] = $this->sue;
         $list[] = $this->sarah;
         $list[] = $this->mike;
@@ -116,7 +102,7 @@ final class FinderTest extends TestCase
      */
     public function should_return_closest_two_for_four_people()
     {
-        $list   = [];
+        $list = [];
         $list[] = $this->sue;
         $list[] = $this->sarah;
         $list[] = $this->mike;
