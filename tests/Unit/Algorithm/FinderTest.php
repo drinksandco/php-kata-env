@@ -6,6 +6,7 @@ namespace KataTest\Unit\Algorithm;
 
 use Kata\Algorithm\Finder;
 use Kata\Algorithm\FinderCriteria;
+use Kata\Algorithm\PeopleByAgeDifferenceCollection;
 use Kata\Algorithm\Person;
 use PHPUnit\Framework\TestCase;
 
@@ -45,7 +46,7 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_empty_when_given_empty_list()
     {
-        $list   = [];
+        $list   = new PeopleByAgeDifferenceCollection();
         $finder = new Finder($list);
 
         $result = $finder->find(FinderCriteria::CLOSEST);
@@ -57,8 +58,7 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_empty_when_given_one_person()
     {
-        $list   = [];
-        $list[] = $this->sue;
+        $list   = new PeopleByAgeDifferenceCollection([$this->sue]);
         $finder = new Finder($list);
 
         $result = $finder->find(FinderCriteria::CLOSEST);
@@ -70,9 +70,7 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_rern_closest_two_for_two_people()
     {
-        $list   = [];
-        $list[] = $this->sue;
-        $list[] = $this->greg;
+        $list   = new PeopleByAgeDifferenceCollection([$this->sue, $this->greg]);
         $finder = new Finder($list);
 
         $result = $finder->find(FinderCriteria::CLOSEST);
@@ -84,9 +82,7 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_furthest_two_for_two_people()
     {
-        $list   = [];
-        $list[] = $this->mike;
-        $list[] = $this->greg;
+        $list   = new PeopleByAgeDifferenceCollection([$this->mike, $this->greg]);
         $finder = new Finder($list);
 
         $result = $finder->find(FinderCriteria::FURTHEST);
@@ -98,11 +94,12 @@ final class FinderTest extends TestCase
     /** @test */
     public function should_return_furthest_two_for_four_people()
     {
-        $list   = [];
-        $list[] = $this->sue;
-        $list[] = $this->sarah;
-        $list[] = $this->mike;
-        $list[] = $this->greg;
+        $list   = new PeopleByAgeDifferenceCollection([
+            $this->sue,
+            $this->sarah,
+            $this->mike,
+            $this->greg
+        ]);
         $finder = new Finder($list);
 
         $result = $finder->find(FinderCriteria::FURTHEST);
@@ -116,11 +113,12 @@ final class FinderTest extends TestCase
      */
     public function should_return_closest_two_for_four_people()
     {
-        $list   = [];
-        $list[] = $this->sue;
-        $list[] = $this->sarah;
-        $list[] = $this->mike;
-        $list[] = $this->greg;
+        $list   = new PeopleByAgeDifferenceCollection([
+            $this->sue,
+            $this->sarah,
+            $this->mike,
+            $this->greg
+        ]);
         $finder = new Finder($list);
 
         $result = $finder->find(FinderCriteria::CLOSEST);

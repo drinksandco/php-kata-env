@@ -10,11 +10,11 @@ use function dump;
 final class Finder
 {
     /** @var Person[] */
-    private $people;
+    private $peopleByAgeDifferenceCollection;
 
-    public function __construct(array $somePeople)
+    public function __construct(PeopleByAgeDifferenceCollection $peopleByAgeDifferenceCollection)
     {
-        $this->people = $somePeople;
+        $this->peopleByAgeDifferenceCollection = $peopleByAgeDifferenceCollection;
     }
 
     public function find(int $finderCriteria): PeopleByAgeDifference
@@ -22,12 +22,15 @@ final class Finder
         /** @var PeopleByAgeDifference[] $tr */
         $tr = [];
 
-        for ($i = 0; $i < count($this->people); $i++) {
-            for ($j = $i + 1; $j < count($this->people); $j++) {
+        /** @var Person $firstPerson */
+        foreach ($this->peopleByAgeDifferenceCollection as $firstPerson) {
+            /** @var Person $secondPerson */
+            foreach ($this->peopleByAgeDifferenceCollection as $secondPerson) {
+                if ($firstPerson->equals($secondPerson)){
+                    continue;
+                }
                 $peopleByAgeDifference = new PeopleByAgeDifference();
-                
-                $firstPerson = $this->people[$i];
-                $secondPerson = $this->people[$j];
+
                 if ($this->isFirstBirthdaySmallerThanSecondOne(
                     $firstPerson->birthDate,
                     $secondPerson->birthDate
@@ -44,8 +47,8 @@ final class Finder
                     - $peopleByAgeDifference->firstPerson->birthDate->getTimestamp();
 
                 $tr[] = $peopleByAgeDifference;
-            }
 
+            }
         }
 
         if (count($tr) < 1) {

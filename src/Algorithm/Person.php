@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Kata\Algorithm;
 
@@ -10,9 +10,14 @@ final class Person
 {
     /** @var string */
     public $name;
-
     /** @var DateTime */
     public $birthDate;
+
+    public function equals(self $person): bool
+    {
+        return $this->name === $person->name
+            && $this->birthDate === $person->birthDate;
+    }
 
     public function getName(): string
     {
