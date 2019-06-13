@@ -50,8 +50,8 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(Criteria::CLOSEST);
 
-        $this->assertEquals(null, $result->p1);
-        $this->assertEquals(null, $result->p2);
+        $this->assertEquals(null, $result->person_one);
+        $this->assertEquals(null, $result->person_two);
     }
 
     /** @test */
@@ -63,8 +63,8 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(Criteria::CLOSEST);
 
-        $this->assertEquals(null, $result->p1);
-        $this->assertEquals(null, $result->p2);
+        $this->assertEquals(null, $result->person_one);
+        $this->assertEquals(null, $result->person_two);
     }
 
     /** @test */
@@ -77,8 +77,8 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(Criteria::CLOSEST);
 
-        $this->assertEquals($this->sue, $result->p1);
-        $this->assertEquals($this->greg, $result->p2);
+        $this->assertEquals($this->sue, $result->person_one);
+        $this->assertEquals($this->greg, $result->person_two);
     }
 
     /** @test */
@@ -91,8 +91,8 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(Criteria::FURTHEST);
 
-        $this->assertEquals($this->greg, $result->p1);
-        $this->assertEquals($this->mike, $result->p2);
+        $this->assertEquals($this->greg, $result->person_one);
+        $this->assertEquals($this->mike, $result->person_two);
     }
 
     /** @test */
@@ -107,8 +107,8 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(Criteria::FURTHEST);
 
-        $this->assertEquals($this->sue, $result->p1);
-        $this->assertEquals($this->sarah, $result->p2);
+        $this->assertEquals($this->sue, $result->person_one);
+        $this->assertEquals($this->sarah, $result->person_two);
     }
 
     /**
@@ -125,7 +125,7 @@ final class FinderTest extends TestCase
 
         $result = $finder->find(Criteria::CLOSEST);
 
-        $this->assertEquals($this->sue, $result->p1);
-        $this->assertEquals($this->greg, $result->p2);
+        $this->assertEquals($this->sue, $result->person_one);
+        $this->assertEquals($this->greg, $result->person_two);
     }
 }

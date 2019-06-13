@@ -7,53 +7,53 @@ namespace Kata\Algorithm;
 final class Finder
 {
     /** @var Person[] */
-    private $_p;
+    private $people;
 
     public function __construct(array $p)
     {
-        $this->_p = $p;
+        $this->people = $p;
     }
 
-    public function find(int $ft): F
+    public function find(int $criteria): F
     {
-        /** @var F[] $tr */
-        $tr = [];
+        /** @var F[] $results */
+        $results = [];
 
-        for ($i = 0; $i < count($this->_p); $i++) {
-            for ($j = $i + 1; $j < count($this->_p); $j++) {
-                $r = new F();
+        for ($i = 0; $i < count($this->people); $i++) {
+            for ($j = $i + 1; $j < count($this->people); $j++) {
+                $result = new F();
 
-                if ($this->_p[$i]->birthDate < $this->_p[$j]->birthDate) {
-                    $r->p1 = $this->_p[$i];
-                    $r->p2 = $this->_p[$j];
+                if ($this->people[$i]->birthDate < $this->people[$j]->birthDate) {
+                    $result->person_one = $this->people[$i];
+                    $result->person_two = $this->people[$j];
                 } else {
-                    $r->p1 = $this->_p[$j];
-                    $r->p2 = $this->_p[$i];
+                    $result->person_one = $this->people[$j];
+                    $result->person_two = $this->people[$i];
                 }
 
-                $r->d = $r->p2->birthDate->getTimestamp()
-                    - $r->p1->birthDate->getTimestamp();
+                $result->age_difference = $result->person_two->birthDate->getTimestamp()
+                    - $result->person_one->birthDate->getTimestamp();
 
-                $tr[] = $r;
+                $results[] = $result;
             }
         }
 
-        if (count($tr) < 1) {
+        if (count($results) < 1) {
             return new F();
         }
 
-        $answer = $tr[0];
+        $answer = $results[0];
 
-        foreach ($tr as $result) {
-            switch ($ft) {
+        foreach ($results as $result) {
+            switch ($criteria) {
                 case Criteria::CLOSEST:
-                    if ($result->d < $answer->d) {
+                    if ($result->age_difference < $answer->age_difference) {
                         $answer = $result;
                     }
                     break;
 
                 case Criteria::FURTHEST:
-                    if ($result->d > $answer->d) {
+                    if ($result->age_difference > $answer->age_difference) {
                         $answer = $result;
                     }
                     break;
