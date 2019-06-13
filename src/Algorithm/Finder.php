@@ -46,13 +46,13 @@ final class Finder
 
         foreach ($tr as $result) {
             switch ($ft) {
-                case FT::ONE:
+                case FinderCriteria::CLOSEST:
                     if ($result->d < $answer->d) {
                         $answer = $result;
                     }
                     break;
 
-                case FT::TWO:
+                case FinderCriteria::FURTHEST:
                     if ($result->d > $answer->d) {
                         $answer = $result;
                     }
