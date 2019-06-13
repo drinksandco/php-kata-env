@@ -6,7 +6,7 @@ namespace Kata\Algorithm;
 
 final class Finder
 {
-    /** @var Thing[] */
+    /** @var Person[] */
     private $_p;
 
     public function __construct(array $p)
@@ -46,13 +46,13 @@ final class Finder
 
         foreach ($tr as $result) {
             switch ($ft) {
-                case FT::ONE:
+                case Criteria::CLOSEST:
                     if ($result->d < $answer->d) {
                         $answer = $result;
                     }
                     break;
 
-                case FT::TWO:
+                case Criteria::FURTHEST:
                     if ($result->d > $answer->d) {
                         $answer = $result;
                     }

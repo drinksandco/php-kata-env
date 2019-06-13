@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Kata\Algorithm;
 
-interface FT
+interface Criteria
 {
-    const ONE = 1;
-    const TWO = 2;
+    const CLOSEST = 1;
+    const FURTHEST = 2;
 }
