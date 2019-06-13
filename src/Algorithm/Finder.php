@@ -14,46 +14,46 @@ final class Finder
         $this->users = $users;
     }
 
-    public function find(int $ft): F
+    public function find(int $ft): UsersBirthDateDifference
     {
-        /** @var F[] $tr */
-        $tr = [];
+        /** @var UsersBirthDateDifference[] $usersBirthDateDifferenceList */
+        $usersBirthDateDifferenceList = [];
 
         for ($i = 0; $i < count($this->users); $i++) {
             for ($j = $i + 1; $j < count($this->users); $j++) {
-                $r = new F();
+                $usersBirthDateDifference = new UsersBirthDateDifference();
 
                 if ($this->users[$i]->birthDate < $this->users[$j]->birthDate) {
-                    $r->p1 = $this->users[$i];
-                    $r->p2 = $this->users[$j];
+                    $usersBirthDateDifference->youngerUser = $this->users[$i];
+                    $usersBirthDateDifference->olderUser = $this->users[$j];
                 } else {
-                    $r->p1 = $this->users[$j];
-                    $r->p2 = $this->users[$i];
+                    $usersBirthDateDifference->youngerUser = $this->users[$j];
+                    $usersBirthDateDifference->olderUser = $this->users[$i];
                 }
 
-                $r->d = $r->p2->birthDate->getTimestamp()
-                    - $r->p1->birthDate->getTimestamp();
+                $usersBirthDateDifference->dateDifference = $usersBirthDateDifference->olderUser->birthDate->getTimestamp()
+                    - $usersBirthDateDifference->youngerUser->birthDate->getTimestamp();
 
-                $tr[] = $r;
+                $usersBirthDateDifferenceList[] = $usersBirthDateDifference;
             }
         }
 
-        if (count($tr) < 1) {
-            return new F();
+        if (count($usersBirthDateDifferenceList) < 1) {
+            return new UsersBirthDateDifference();
         }
 
-        $answer = $tr[0];
+        $answer = $usersBirthDateDifferenceList[0];
 
-        foreach ($tr as $result) {
+        foreach ($usersBirthDateDifferenceList as $result) {
             switch ($ft) {
-                case FT::ONE:
-                    if ($result->d < $answer->d) {
+                case BirthDateDifference::SHORTEST:
+                    if ($result->dateDifference < $answer->dateDifference) {
                         $answer = $result;
                     }
                     break;
 
-                case FT::TWO:
-                    if ($result->d > $answer->d) {
+                case BirthDateDifference::LONGEST:
+                    if ($result->dateDifference > $answer->dateDifference) {
                         $answer = $result;
                     }
                     break;

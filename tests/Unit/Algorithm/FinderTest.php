@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace KataTest\Unit\Algorithm;
 
 use Kata\Algorithm\Finder;
-use Kata\Algorithm\FT;
+use Kata\Algorithm\BirthDateDifference;
 use Kata\Algorithm\User;
 use PHPUnit\Framework\TestCase;
 
@@ -48,10 +48,10 @@ final class FinderTest extends TestCase
         $users   = [];
         $finder = new Finder($users);
 
-        $result = $finder->find(FT::ONE);
+        $result = $finder->find(BirthDateDifference::SHORTEST);
 
-        $this->assertEquals(null, $result->p1);
-        $this->assertEquals(null, $result->p2);
+        $this->assertEquals(null, $result->youngerUser);
+        $this->assertEquals(null, $result->olderUser);
     }
 
     /** @test */
@@ -61,10 +61,10 @@ final class FinderTest extends TestCase
         $users[] = $this->sue;
         $finder = new Finder($users);
 
-        $result = $finder->find(FT::ONE);
+        $result = $finder->find(BirthDateDifference::SHORTEST);
 
-        $this->assertEquals(null, $result->p1);
-        $this->assertEquals(null, $result->p2);
+        $this->assertEquals(null, $result->youngerUser);
+        $this->assertEquals(null, $result->olderUser);
     }
 
     /** @test */
@@ -75,10 +75,10 @@ final class FinderTest extends TestCase
         $users[] = $this->greg;
         $finder = new Finder($users);
 
-        $result = $finder->find(FT::ONE);
+        $result = $finder->find(BirthDateDifference::SHORTEST);
 
-        $this->assertEquals($this->sue, $result->p1);
-        $this->assertEquals($this->greg, $result->p2);
+        $this->assertEquals($this->sue, $result->youngerUser);
+        $this->assertEquals($this->greg, $result->olderUser);
     }
 
     /** @test */
@@ -89,10 +89,10 @@ final class FinderTest extends TestCase
         $users[] = $this->greg;
         $finder = new Finder($users);
 
-        $result = $finder->find(FT::TWO);
+        $result = $finder->find(BirthDateDifference::LONGEST);
 
-        $this->assertEquals($this->greg, $result->p1);
-        $this->assertEquals($this->mike, $result->p2);
+        $this->assertEquals($this->greg, $result->youngerUser);
+        $this->assertEquals($this->mike, $result->olderUser);
     }
 
     /** @test */
@@ -105,10 +105,10 @@ final class FinderTest extends TestCase
         $users[] = $this->greg;
         $finder = new Finder($users);
 
-        $result = $finder->find(FT::TWO);
+        $result = $finder->find(BirthDateDifference::LONGEST);
 
-        $this->assertEquals($this->sue, $result->p1);
-        $this->assertEquals($this->sarah, $result->p2);
+        $this->assertEquals($this->sue, $result->youngerUser);
+        $this->assertEquals($this->sarah, $result->olderUser);
     }
 
     /**
@@ -123,9 +123,9 @@ final class FinderTest extends TestCase
         $users[] = $this->greg;
         $finder = new Finder($users);
 
-        $result = $finder->find(FT::ONE);
+        $result = $finder->find(BirthDateDifference::SHORTEST);
 
-        $this->assertEquals($this->sue, $result->p1);
-        $this->assertEquals($this->greg, $result->p2);
+        $this->assertEquals($this->sue, $result->youngerUser);
+        $this->assertEquals($this->greg, $result->olderUser);
     }
 }
