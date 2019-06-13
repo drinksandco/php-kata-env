@@ -14,13 +14,14 @@ final class Finder
         $this->users = $users;
     }
 
-    public function find(int $ft): UsersBirthDateDifference
+    public function find(int $orderMode): UsersBirthDateDifference
     {
         /** @var UsersBirthDateDifference[] $usersBirthDateDifferenceList */
         $usersBirthDateDifferenceList = [];
+        $totalUsers = count($this->users);
 
-        for ($i = 0; $i < count($this->users); $i++) {
-            for ($j = $i + 1; $j < count($this->users); $j++) {
+        for ($i = 0; $i < $totalUsers; $i++) {
+            for ($j = $i + 1; $j < $totalUsers; $j++) {
                 $usersBirthDateDifference = new UsersBirthDateDifference();
 
                 if ($this->users[$i]->birthDate < $this->users[$j]->birthDate) {
@@ -42,10 +43,22 @@ final class Finder
             return new UsersBirthDateDifference();
         }
 
+        return $this->orderByAgeDifference($orderMode, $usersBirthDateDifferenceList);
+    }
+
+    /**
+     *
+     *
+     * @param int $orderMode
+     * @param UsersBirthDateDifference[] $usersBirthDateDifferenceList
+     * @return UsersBirthDateDifference
+     */
+    private function orderByAgeDifference(int $orderMode, array $usersBirthDateDifferenceList): UsersBirthDateDifference
+    {
         $answer = $usersBirthDateDifferenceList[0];
 
         foreach ($usersBirthDateDifferenceList as $result) {
-            switch ($ft) {
+            switch ($orderMode) {
                 case BirthDateDifference::SHORTEST:
                     if ($result->dateDifference < $answer->dateDifference) {
                         $answer = $result;
@@ -59,7 +72,6 @@ final class Finder
                     break;
             }
         }
-
         return $answer;
     }
 }
