@@ -20,16 +20,16 @@ final class Finder
         $usersBirthDateDifferenceList = [];
         $totalUsers = count($this->users);
 
-        for ($i = 0; $i < $totalUsers; $i++) {
+        foreach ($this->users as $i => $user) {
             for ($j = $i + 1; $j < $totalUsers; $j++) {
                 $usersBirthDateDifference = new UsersBirthDateDifference();
 
-                if ($this->users[$i]->birthDate < $this->users[$j]->birthDate) {
-                    $usersBirthDateDifference->youngerUser = $this->users[$i];
+                if ($user->birthDate < $this->users[$j]->birthDate) {
+                    $usersBirthDateDifference->youngerUser = $user;
                     $usersBirthDateDifference->olderUser = $this->users[$j];
                 } else {
                     $usersBirthDateDifference->youngerUser = $this->users[$j];
-                    $usersBirthDateDifference->olderUser = $this->users[$i];
+                    $usersBirthDateDifference->olderUser = $user;
                 }
 
                 $usersBirthDateDifference->dateDifference = $usersBirthDateDifference->olderUser->birthDate->getTimestamp()
@@ -55,23 +55,14 @@ final class Finder
      */
     private function orderByAgeDifference(int $orderMode, array $usersBirthDateDifferenceList): UsersBirthDateDifference
     {
-        $answer = $usersBirthDateDifferenceList[0];
-
-        foreach ($usersBirthDateDifferenceList as $result) {
-            switch ($orderMode) {
-                case BirthDateDifference::SHORTEST:
-                    if ($result->dateDifference < $answer->dateDifference) {
-                        $answer = $result;
-                    }
-                    break;
-
-                case BirthDateDifference::LONGEST:
-                    if ($result->dateDifference > $answer->dateDifference) {
-                        $answer = $result;
-                    }
-                    break;
+        usort($usersBirthDateDifferenceList, function(UsersBirthDateDifference $firstElement, UsersBirthDateDifference $secondElement) use ($orderMode) {
+            if (BirthDateDifference::SHORTEST === $orderMode) {
+                return $firstElement->dateDifference <=> $secondElement->dateDifference;
             }
-        }
-        return $answer;
+
+            return $secondElement->dateDifference <=> $firstElement->dateDifference;
+        });
+
+        return current($usersBirthDateDifferenceList);
     }
 }
