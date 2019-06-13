@@ -68,7 +68,7 @@ final class FinderTest extends TestCase
     }
 
     /** @test */
-    public function should_return_closest_two_for_two_people()
+    public function should_rern_closest_two_for_two_people()
     {
         $list   = [];
         $list[] = $this->sue;

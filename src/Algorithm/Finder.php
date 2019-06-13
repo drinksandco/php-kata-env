@@ -4,38 +4,46 @@ declare(strict_types = 1);
 
 namespace Kata\Algorithm;
 
+use DateTime;
+use function dump;
+
 final class Finder
 {
     /** @var Person[] */
-    private $_p;
+    private $people;
 
-    public function __construct(array $p)
+    public function __construct(array $somePeople)
     {
-        $this->_p = $p;
+        $this->people = $somePeople;
     }
 
-    public function find(int $ft): PeopleByAgeDifference
+    public function find(int $finderCriteria): PeopleByAgeDifference
     {
         /** @var PeopleByAgeDifference[] $tr */
         $tr = [];
 
-        for ($i = 0; $i < count($this->_p); $i++) {
-            for ($j = $i + 1; $j < count($this->_p); $j++) {
-                $r = new PeopleByAgeDifference();
+        for ($i = 0; $i < count($this->people); $i++) {
+            for ($j = $i + 1; $j < count($this->people); $j++) {
+                $peopleByAgeDifference = new PeopleByAgeDifference();
 
-                if ($this->_p[$i]->birthDate < $this->_p[$j]->birthDate) {
-                    $r->firstPerson = $this->_p[$i];
-                    $r->secondPerson = $this->_p[$j];
+                if ($this->isFirstBirthdaySmallerThanSecondOne(
+                    $this->people[$i]->birthDate,
+                    $this->people[$j]->birthDate
+                )
+                ) {
+                    $peopleByAgeDifference->firstPerson = $this->people[$i];
+                    $peopleByAgeDifference->secondPerson = $this->people[$j];
                 } else {
-                    $r->firstPerson = $this->_p[$j];
-                    $r->secondPerson = $this->_p[$i];
+                    $peopleByAgeDifference->firstPerson = $this->people[$j];
+                    $peopleByAgeDifference->secondPerson = $this->people[$i];
                 }
 
-                $r->timeDifference = $r->secondPerson->birthDate->getTimestamp()
-                    - $r->firstPerson->birthDate->getTimestamp();
+                $peopleByAgeDifference->timeDifference = $peopleByAgeDifference->secondPerson->birthDate->getTimestamp()
+                    - $peopleByAgeDifference->firstPerson->birthDate->getTimestamp();
 
-                $tr[] = $r;
+                $tr[] = $peopleByAgeDifference;
             }
+
         }
 
         if (count($tr) < 1) {
@@ -45,7 +53,7 @@ final class Finder
         $answer = $tr[0];
 
         foreach ($tr as $result) {
-            switch ($ft) {
+            switch ($finderCriteria) {
                 case FinderCriteria::CLOSEST:
                     if ($result->timeDifference < $answer->timeDifference) {
                         $answer = $result;
@@ -61,5 +69,12 @@ final class Finder
         }
 
         return $answer;
+    }
+
+    private function isFirstBirthdaySmallerThanSecondOne(
+        DateTime $firstBirthday,
+        DateTime $secondBirthday
+    ): bool {
+        return $firstBirthday < $secondBirthday;
     }
 }
