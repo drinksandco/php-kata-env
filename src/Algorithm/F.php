@@ -6,10 +6,10 @@ namespace Kata\Algorithm;
 
 final class F
 {
-    /** @var Thing */
+    /** @var User */
     public $p1;
 
-    /** @var Thing */
+    /** @var User */
     public $p2;
 
     /** @var int */
